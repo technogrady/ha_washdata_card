@@ -4,111 +4,134 @@
 # WashData Card
 
 A custom Home Assistant **Lovelace dashboard card** for the
-[WashData integration](https://github.com/3dg1luk43/ha_washdata). Displays a
-compact tile showing the current status, matched program, cycle progress and
-time remaining for washers, dryers, dishwashers and other appliances tracked
-by WashData.
+[WashData integration](https://github.com/3dg1luk43/ha_washdata).
 
-The card works with any WashData-provided entities (or any compatible
-`sensor` / `select` entities), and ships with a full visual editor plus
-localisation for 25+ languages.
+The card renders a large **hero view** that surfaces everything WashData
+exposes — current state, program, cycle phase, a circular progress ring,
+time remaining, elapsed time, total predicted duration, and live power — in a
+single glanceable card with state-aware color accents.
 
----
-
-## ✨ Features
-
-- **Compact tile layout** — status icon, program name, percentage or time remaining in a single row.
-- **Spinning icon** while a cycle is running (optional).
-- **Two display modes** — show time remaining *or* percentage progress.
-- **Visual editor** — configure the card from the dashboard UI, no YAML required.
-- **Program quick-select** — tap the program to change it via the associated `select` entity.
-- **Multi-language** — English, German, French, Spanish, Polish, Czech, Dutch, Italian, Portuguese, Chinese and many more auto-detected from the Home Assistant locale.
-- **Entity-agnostic** — pair it with `sensor.*_state`, `sensor.*_program`, `sensor.*_cycle_progress`, `sensor.*_time_remaining` from WashData, or any equivalent entities.
+![WashData Card preview](assets/preview.svg)
 
 ---
 
-## 📸 Preview
+## Features
 
-![Card preview](doc/images/manage_cycles.png)
+- **Hero layout** — large card (min 260 px) with a full-width accent bar that
+  shifts color based on the appliance state.
+- **Circular SVG progress ring** — big percentage in the center, smooth
+  animated fill as the cycle advances.
+- **State chip** — shows the current state label; pulses when the machine is
+  actively running.
+- **Appliance icon** — glow ring and optional spin animation while running.
+- **Program + phase** — program name prominent, current phase as a secondary
+  label beside the ring.
+- **4-metric grid** — Time Left · Elapsed · Total Duration · Power, each with
+  icon, value, and unit.
+- **Auto-discovery** — set `entity` (the `_washer_state` sensor) and all
+  sibling sensors are detected automatically. Every sensor can be overridden
+  explicitly.
+- **Visual editor** — full `ha-form`-based GUI in the dashboard card picker;
+  no YAML required.
+- **Tap to more-info** — tapping the card opens the standard HA detail dialog
+  for the state entity.
+- **Collision-safe** — a `customElements.get()` guard means it coexists safely
+  with the card copy bundled inside the WashData integration.
+- **HA theme-aware** — honours `--ha-card-background`, `--primary-text-color`,
+  `--secondary-text-color`, `--divider-color`, and other standard CSS vars.
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Option A: HACS (Recommended)
 
 1. Open HACS in Home Assistant.
-2. Go to **Frontend** (or **Dashboards** depending on HACS version).
+2. Go to **Frontend** (or **Dashboards** depending on your HACS version).
 3. Click the **⋮** menu in the top right and choose **Custom repositories**.
 4. Add this repository:
    - **Repository:** `https://github.com/technogrady/ha_washdata_card`
    - **Category:** `Lovelace` (Dashboard / Plugin)
 5. Click **Add**, then search for **"WashData Card"** and click **Download**.
-6. HACS will register the resource automatically. If it does not, add it
-   manually under **Settings → Dashboards → Resources**:
+6. HACS registers the resource automatically. If it does not, add it manually
+   under **Settings → Dashboards → Resources**:
    - **URL:** `/hacsfiles/ha_washdata_card/ha-washdata-card.js`
    - **Resource type:** `JavaScript Module`
-7. Hard-refresh your browser (Ctrl/Cmd + Shift + R).
+7. Hard-refresh your browser (`Ctrl`/`Cmd` + `Shift` + `R`).
 
-> Once this repository is accepted into the HACS default repository list,
-> steps 3 and 4 will be replaced by a simple search inside HACS → Frontend.
+### Option B: Manual
 
-### Option B: Manual Installation
-
-1. Download `ha-washdata-card.js` from the latest [release](https://github.com/technogrady/ha_washdata_card/releases).
-2. Copy it to `<config>/www/community/ha_washdata_card/ha-washdata-card.js`
-   (create folders as needed).
-3. In Home Assistant go to **Settings → Dashboards → Resources → Add resource**:
+1. Download `ha-washdata-card.js` from the latest
+   [release](https://github.com/technogrady/ha_washdata_card/releases).
+2. Copy it to:
+   ```
+   <config>/www/community/ha_washdata_card/ha-washdata-card.js
+   ```
+   (create the folders if they don't exist).
+3. Go to **Settings → Dashboards → Resources → Add resource**:
    - **URL:** `/local/community/ha_washdata_card/ha-washdata-card.js`
    - **Resource type:** `JavaScript Module`
 4. Hard-refresh your browser.
 
 ---
 
-## 🧩 Usage
+## Usage
 
-In the dashboard editor, click **Add Card → Custom: WashData Tile Card** and
-fill out the fields, or use YAML:
+In the dashboard editor, click **Add Card → Custom: WashData Card** and fill
+in the fields, or use YAML directly:
 
 ```yaml
 type: custom:ha-washdata-card
+entity: sensor.washing_machine_washer_state
 title: Washing Machine
-entity: sensor.washing_machine_state
-program_entity: select.washing_machine_program
-pct_entity: sensor.washing_machine_cycle_progress
-time_entity: sensor.washing_machine_time_remaining
 icon: mdi:washing-machine
-active_color: "#41BDF5"
-show_state: true
-show_program: true
-show_details: true
 spin_icon: true
-display_mode: time_remaining   # or: percentage
+show_progress_ring: true
+show_metrics: true
 ```
 
-### Configuration options
+All sibling sensors (`_washer_program`, `_current_phase`, `_cycle_progress`,
+`_time_remaining`, `_elapsed_time`, `_total_duration`, `_current_power`) are
+inferred automatically when your entities follow the WashData naming convention
+(`sensor.<device>_washer_state`). Override any of them explicitly if needed.
+
+### Full configuration reference
 
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | string | *(empty)* | Optional header text above the tile. |
-| `entity` | entity id | **required** | Main state entity (e.g. `sensor.washer_state`). |
-| `program_entity` | entity id | — | Program/profile name entity or `select` for changing programs. |
-| `pct_entity` | entity id | — | Cycle progress entity (0–100). |
-| `time_entity` | entity id | — | Remaining-time entity (minutes). |
-| `icon` | mdi icon | `mdi:washing-machine` | Tile icon. |
-| `active_color` | CSS colour | theme accent | Icon colour while the cycle is running. |
-| `show_state` | boolean | `true` | Show the text status line. |
-| `show_program` | boolean | `true` | Show the matched program name. |
-| `show_details` | boolean | `true` | Show progress / time remaining row. |
-| `spin_icon` | boolean | `true` | Spin the icon while running. |
-| `display_mode` | `time_remaining` / `percentage` | `time_remaining` | Which metric to show in the details row. |
+| `entity` | entity id | **required** | Main state sensor (`sensor.*_washer_state`). |
+| `title` | string | friendly name | Card header text. |
+| `icon` | mdi icon | `mdi:washing-machine` | Appliance icon. |
+| `accent_color` | `[r, g, b]` | state color | Override the accent color (all states). |
+| `show_progress_ring` | boolean | `true` | Show the circular progress ring + phase row. |
+| `show_metrics` | boolean | `true` | Show the 4-metric grid. |
+| `spin_icon` | boolean | `true` | Spin the appliance icon while the state is `running`. |
+| `program_entity` | entity id | auto | Program name sensor or select entity. |
+| `phase_entity` | entity id | auto | Current-phase sensor (`_current_phase`). |
+| `time_entity` | entity id | auto | Time-remaining sensor in minutes (`_time_remaining`). |
+| `total_entity` | entity id | auto | Total predicted duration in minutes (`_total_duration`). |
+| `pct_entity` | entity id | auto | Cycle-progress sensor 0–100 (`_cycle_progress`). |
+| `power_entity` | entity id | auto | Current-power sensor in watts (`_current_power`). |
+| `elapsed_entity` | entity id | auto | Elapsed-time sensor in seconds (`_elapsed_time`). |
+
+### State color reference
+
+| State | Color |
+| :--- | :--- |
+| `running` / `rinsing` / `spinning` | Green |
+| `starting` / `ending` | Blue |
+| `anti_wrinkle` | Purple |
+| `paused` | Amber |
+| `interrupted` / `force_stopped` | Red |
+| `finished` | Light green |
+| `idle` / `off` / `unknown` | Gray |
 
 ---
 
-## 🔗 Related
+## Related
 
 - [WashData integration](https://github.com/3dg1luk43/ha_washdata) — the
-  backend that provides the entities consumed by this card.
+  backend integration that provides the entities consumed by this card.
 
 ## License
 

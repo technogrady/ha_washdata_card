@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="300" viewBox="0 0 440 300">
+  <defs>
+    <clipPath id="card-clip">
+      <rect width="440" height="300" rx="12"/>
+    </clipPath>
+    <!-- Progress ring gradient -->
+    <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4CAF50"/>
+      <stop offset="100%" stop-color="#388E3C"/>
+    </linearGradient>
+    <!-- Icon background -->
+    <radialGradient id="icon-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4CAF50" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4CAF50" stop-opacity="0.12"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Card background -->
+  <rect width="440" height="300" rx="12" fill="#1c1c1e"/>
+
+  <!-- Accent bar (running = green) -->
+  <rect width="440" height="5" fill="#4CAF50" rx="0"/>
+
+  <!-- ── Header ── -->
+  <!-- Icon circle with glow -->
+  <circle cx="42" cy="47" r="25" fill="url(#icon-glow)"/>
+  <!-- Washing machine icon (simplified SVG path) -->
+  <g transform="translate(29, 34)" fill="none" stroke="#4CAF50" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Machine outline -->
+    <rect x="1" y="1" width="22" height="22" rx="3" stroke="#4CAF50" fill="none"/>
+    <!-- Door circle -->
+    <circle cx="12" cy="14" r="6" stroke="#4CAF50" fill="none"/>
+    <!-- Inner drum -->
+    <circle cx="12" cy="14" r="3" stroke="#4CAF50" stroke-opacity="0.6" fill="none"/>
+    <!-- Control panel dots -->
+    <circle cx="5" cy="5" r="1.2" fill="#4CAF50"/>
+    <circle cx="9" cy="5" r="1.2" fill="#4CAF50" fill-opacity="0.5"/>
+  </g>
+
+  <!-- Title -->
+  <text x="82" y="42" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="15" font-weight="600" fill="#e5e5e7">Washing Machine</text>
+  <!-- Program name -->
+  <text x="82" y="58" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="12" fill="#8e8e93">Cotton 60°</text>
+
+  <!-- State chip -->
+  <rect x="352" y="30" width="68" height="24" rx="12" fill="rgba(76,175,80,0.18)"/>
+  <text x="386" y="46" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="11.5" font-weight="500" fill="#4CAF50" text-anchor="middle">Running</text>
+
+  <!-- ── Progress ring section ── -->
+  <!-- Ring background track -->
+  <circle cx="132" cy="178" r="62" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9"/>
+  <!-- Progress arc (~72% = 263.89 * 0.72 ≈ 190, offset = 263.89 - 190 = 73.89) -->
+  <circle cx="132" cy="178" r="62" fill="none" stroke="url(#ring-grad)" stroke-width="9"
+          stroke-dasharray="190 263.89"
+          stroke-dashoffset="73.89"
+          stroke-linecap="round"
+          transform="rotate(-90 132 178)"/>
+  <!-- Percentage text -->
+  <text x="132" y="170" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="30" font-weight="700" fill="#e5e5e7" text-anchor="middle">72</text>
+  <text x="132" y="188" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="13" fill="#8e8e93" text-anchor="middle">%</text>
+
+  <!-- Phase label -->
+  <text x="132" y="256" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="12" fill="#8e8e93" text-anchor="middle">Main Wash</text>
+
+  <!-- ── 4-metric grid ── -->
+  <!-- Divider -->
+  <line x1="216" y1="100" x2="216" y2="280" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <line x1="216" y1="190" x2="432" y2="190" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Time Left -->
+  <text x="252" y="128" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">Time Left</text>
+  <text x="252" y="155" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="22" font-weight="600" fill="#e5e5e7" text-anchor="middle">23</text>
+  <text x="252" y="170" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">min</text>
+
+  <!-- Elapsed -->
+  <text x="362" y="128" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">Elapsed</text>
+  <text x="362" y="155" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="22" font-weight="600" fill="#e5e5e7" text-anchor="middle">47</text>
+  <text x="362" y="170" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">min</text>
+
+  <!-- Total Duration -->
+  <text x="252" y="213" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">Total Duration</text>
+  <text x="252" y="240" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="22" font-weight="600" fill="#e5e5e7" text-anchor="middle">70</text>
+  <text x="252" y="255" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">min</text>
+
+  <!-- Power -->
+  <text x="362" y="213" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">Power</text>
+  <text x="362" y="240" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="22" font-weight="600" fill="#e5e5e7" text-anchor="middle">850</text>
+  <text x="362" y="255" font-family="'Roboto', 'Helvetica Neue', sans-serif" font-size="10.5" fill="#8e8e93" text-anchor="middle">W</text>
+
+  <!-- Bottom padding spacer -->
+  <rect x="0" y="280" width="440" height="20" fill="#1c1c1e"/>
+</svg>
