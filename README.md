@@ -11,6 +11,8 @@ exposes — current state, program, cycle phase, a circular progress ring,
 time remaining, elapsed time, total predicted duration, and live power — in a
 single glanceable card with state-aware color accents.
 
+![WashData Card preview](assets/preview.svg)
+
 ---
 
 ## Features
