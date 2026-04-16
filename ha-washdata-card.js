@@ -82,7 +82,8 @@ class WashDataCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (!config.entity) throw new Error("WashData Card: 'entity' is required.");
+    if (config.entity === undefined || config.entity === null)
+      throw new Error("WashData Card: 'entity' is required.");
     this._cfg = { ...WashDataCard.getStubConfig(), ...config };
     if (!this._rendered) this._buildShadow();
     this._update();
