@@ -35,8 +35,9 @@ single glanceable card with state-aware color accents.
   no YAML required.
 - **Tap to more-info** — tapping the card opens the standard HA detail dialog
   for the state entity.
-- **Collision-safe** — a `customElements.get()` guard means it coexists safely
-  with the card copy bundled inside the WashData integration.
+- **Conflict-free** — uses the element name `ha-washdata-hero-card`, so it
+  never clashes with the compact tile card bundled inside the WashData
+  integration (`ha-washdata-card`).
 - **HA theme-aware** — honours `--ha-card-background`, `--primary-text-color`,
   `--secondary-text-color`, `--divider-color`, and other standard CSS vars.
 
@@ -81,7 +82,7 @@ In the dashboard editor, click **Add Card → Custom: WashData Card** and fill
 in the fields, or use YAML directly:
 
 ```yaml
-type: custom:ha-washdata-card
+type: custom:ha-washdata-hero-card
 entity: sensor.washing_machine_washer_state
 title: Washing Machine
 icon: mdi:washing-machine
