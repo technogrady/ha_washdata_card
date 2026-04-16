@@ -1,9 +1,6 @@
 // WashData Card — hero-style Lovelace card for the WashData integration
-// Collision guard: skip re-registration if another copy already loaded (e.g. bundled with integration)
-if (!customElements.get("ha-washdata-card")) {
-
-const CARD_TAG   = "ha-washdata-card";
-const EDITOR_TAG = "ha-washdata-card-editor";
+const CARD_TAG   = "ha-washdata-hero-card";
+const EDITOR_TAG = "ha-washdata-hero-card-editor";
 
 // ── State → visual mapping ───────────────────────────────────────────────────
 const STATE_META = {
@@ -617,4 +614,3 @@ window.customCards.push({
     "time remaining, elapsed, total duration, and power.",
 });
 
-} // end collision guard
